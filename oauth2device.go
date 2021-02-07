@@ -95,7 +95,10 @@ func WaitForDeviceAuthorization(client *http.Client, config *Config, code *Devic
 		if err != nil {
 			return nil, err
 		}
-		if resp.StatusCode != http.StatusOK {
+		if resp.StatusCode == http.StatusPreconditionRequired {
+			time.Sleep(time.Duration(code.Interval) * time.Second)
+			continue
+		} else if resp.StatusCode != http.StatusOK {
 			return nil, fmt.Errorf("HTTP error %v (%v) when polling for OAuth token",
 				resp.StatusCode, http.StatusText(resp.StatusCode))
 		}
