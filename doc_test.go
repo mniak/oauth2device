@@ -5,8 +5,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/rjw57/oauth2device"
-	"github.com/rjw57/oauth2device/googledevice"
+	"github.com/mniak/oauth2device"
+	"github.com/mniak/oauth2device/googledevice"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/youtube/v3"

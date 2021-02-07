@@ -1,7 +1,7 @@
 package googledevice
 
 import (
-	"github.com/rjw57/oauth2device"
+	"github.com/mniak/oauth2device"
 )
 
 // Endpoint specifies the endpoints used for the Google OAuth
