@@ -39,7 +39,8 @@ type Config struct {
 // such a response failed.
 type tokenOrError struct {
 	*oauth2.Token
-	Error string `json:"error,omitempty"`
+	Error     string `json:"error,omitempty"`
+	ExpiresIn int64  `json:"expires_in"`
 }
 
 var (
@@ -108,6 +109,9 @@ func WaitForDeviceAuthorization(client *http.Client, config *Config, code *Devic
 		dec := json.NewDecoder(resp.Body)
 		if err := dec.Decode(&token); err != nil {
 			return nil, err
+		}
+		if token.Expiry.IsZero() && token.ExpiresIn != 0 {
+			token.Expiry = time.Now().Add(time.Duration(token.ExpiresIn * int64(time.Second)))
 		}
 
 		switch token.Error {
